@@ -1,0 +1,187 @@
+﻿@model ABCRetailers.Models.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid min-vh-100 text-light bg-black py-4">
+
+    <!-- Animated Heading -->
+    <h1 class="display-4 fw-bold mb-5 animate__animated animate__fadeInDown text-neon-pink">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+    </h1>
+
+    <!-- Dashboard Cards -->
+    <div class="row g-4">
+        <!-- Customers -->
+        <div class="col-md-4">
+            <div class="card card-hover text-center bg-dark text-neon-cyan p-3 neon-border"
+                 onclick="location.href='@Url.Action("Index", "Customer")'"
+                 style="cursor:pointer;">
+                <i class="fas fa-users fa-3x mb-2 text-neon-cyan"></i>
+                <h5 class="fw-bold">Customers</h5>
+                <h2>@Model.CustomerCount</h2>
+                <span class="btn btn-neon-cyan btn-sm mt-2">Manage Customers</span>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="col-md-4">
+            <div class="card card-hover text-center bg-dark text-neon-green p-3 neon-border"
+                 onclick="location.href='@Url.Action("Index", "Product")'"
+                 style="cursor:pointer;">
+                <i class="fas fa-box-open fa-3x mb-2 text-neon-green"></i>
+                <h5 class="fw-bold">Products</h5>
+                <h2>@Model.ProductCount</h2>
+                <span class="btn btn-neon-green btn-sm mt-2">Manage Products</span>
+            </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="col-md-4">
+            <div class="card card-hover text-center bg-dark text-neon-pink p-3 neon-border"
+                 onclick="location.href='@Url.Action("Index", "Order")'"
+                 style="cursor:pointer;">
+                <i class="fas fa-shopping-cart fa-3x mb-2 text-neon-pink"></i>
+                <h5 class="fw-bold">Orders</h5>
+                <h2>@Model.OrderCount</h2>
+                <span class="btn btn-neon-pink btn-sm mt-2">Manage Orders</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <div class="mt-5">
+        <h3 class="mb-4 text-neon-purple"><i class="fas fa-star text-neon-yellow"></i> Featured Products</h3>
+        <div class="row g-4">
+            @if (!Model.FeaturedProducts.Any())
+            {
+                <div class="col-12">
+                    <div class="alert alert-dark text-neon-yellow neon-border">No featured products available.</div>
+                </div>
+            }
+            else
+            {
+                @foreach (var p in Model.FeaturedProducts)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="card card-hover h-100 bg-dark text-light neon-border">
+                            @if (!string.IsNullOrEmpty(p.ImageUrl))
+                            {
+                                <img src="@p.ImageUrl" class="card-img-top" style="height:180px; object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <div class="bg-black d-flex justify-content-center align-items-center" style="height:180px;">
+                                    <i class="fas fa-image fa-3x text-neon-purple"></i>
+                                </div>
+                            }
+                            <div class="card-body text-center">
+                                <h6 class="fw-bold text-neon-cyan">@p.ProductName</h6>
+                                <p class="text-neon-green fw-semibold mb-2">@p.Price.ToString("C")</p>
+                                <a href="@Url.Action("Index", "Product")" class="btn btn-neon-purple btn-sm">View Products</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #000;
+        font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+    }
+
+    /* Neon Glow Colors */
+    .text-neon-cyan {
+        color: #00ffff;
+        text-shadow: 0 0 8px #00ffff, 0 0 16px #00e6e6;
+    }
+
+    .text-neon-green {
+        color: #39ff14;
+        text-shadow: 0 0 8px #39ff14, 0 0 16px #32e600;
+    }
+
+    .text-neon-pink {
+        color: #ff00ff;
+        text-shadow: 0 0 8px #ff00ff, 0 0 16px #e600e6;
+    }
+
+    .text-neon-purple {
+        color: #a020f0;
+        text-shadow: 0 0 8px #a020f0, 0 0 16px #7a00cc;
+    }
+
+    .text-neon-yellow {
+        color: #ffff00;
+        text-shadow: 0 0 8px #ffff00, 0 0 16px #e6e600;
+    }
+
+    /* Neon Buttons */
+    .btn-neon-cyan {
+        color: #00ffff;
+        border: 1px solid #00ffff;
+        background: transparent;
+        text-shadow: 0 0 8px #00ffff;
+    }
+
+        .btn-neon-cyan:hover {
+            background: #00ffff;
+            color: #000;
+        }
+
+    .btn-neon-green {
+        color: #39ff14;
+        border: 1px solid #39ff14;
+        background: transparent;
+        text-shadow: 0 0 8px #39ff14;
+    }
+
+        .btn-neon-green:hover {
+            background: #39ff14;
+            color: #000;
+        }
+
+    .btn-neon-pink {
+        color: #ff00ff;
+        border: 1px solid #ff00ff;
+        background: transparent;
+        text-shadow: 0 0 8px #ff00ff;
+    }
+
+        .btn-neon-pink:hover {
+            background: #ff00ff;
+            color: #000;
+        }
+
+    .btn-neon-purple {
+        color: #a020f0;
+        border: 1px solid #a020f0;
+        background: transparent;
+        text-shadow: 0 0 8px #a020f0;
+    }
+
+        .btn-neon-purple:hover {
+            background: #a020f0;
+            color: #000;
+        }
+
+    /* Neon Card Hover */
+    .card-hover {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 0.75rem;
+    }
+
+        .card-hover:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 0 20px rgba(0,255,255,0.6), 0 0 40px rgba(255,0,255,0.4);
+        }
+
+    .neon-border {
+        border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: 0 0 8px rgba(0,255,255,0.4);
+    }
+</style>
